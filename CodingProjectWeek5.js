@@ -4,7 +4,7 @@ class Movie {
 }
 
 describe () {
-    return  `${this.title}\n`
+    return  `${this.title}\n`;
 }
 }
 
@@ -16,9 +16,7 @@ class Genre {
     }
 
     describe () {
-        return 
-        `${this.type} has ${this.movies.length} movies.`;
-
+        return  `${this.type} has ${this.movies.length} movies.`;
     }
 }
 
@@ -78,6 +76,71 @@ class Menu {
   
 
 
+    createGenre (){
+        let type= prompt(`Enter Type of Genre`)
+        this.genres.push(new Genre(type));
+    }
 
+
+    deleteGenre(){
+        let index= prompt(`Enter the index of the Genre you would like to delete:`)
+        if (index> -1 && index < this.genres.length){
+            this.genres.splice(index,1);
+        }
+    }
+
+
+    viewGenre(){
+        let index=prompt (`Enter the index of the genre you wish to view:`);
+        if (index > -1 && index < this.genres.length){
+            this.selectedGenre= this.genres[index];
+            let description= 'Genre:'+ this.selectedGenre.type+ '\n';
+            for (let i=0; i < this.selectedGenre.movies.length; i++) {
+                description += i + ') ' + this.selectedGenre.movies[i].title+ '\n';
+            }
+
+
+            let selection= this.showGenreMenuOptions(description);
+            switch (selection){
+                case '1':
+                    this.addMovie();
+                    break;
+                case '2':
+                    this.removeMovie();
+                    break;
+            }
+        }
+    }
+
+
+
+
+    displayGenre () {
+        let genreString='';
+        for (let i=0; i<this.genres.length;i++){
+            genreString += i + ') ' +this.genres[i].type + '\n'; 
+        }
+        alert (`Genres 
+        ${genreString}
+        `);
+    }
+
+
+
+    addMovie(){
+        let title= prompt("Enter the title of movie you would like to add to this genre:");
+        this.selectedGenre.movies.push(new Movie(title));
+    }
     
+
+    removeMovie(){
+        let index= prompt("Enter the index of the movie you wish to remove from this genre:");
+        if (index > -1 && index < this.selectedGenre.movies.length){
+            this.selectedGenre.movies.splice(index,1);
+        }
+    }    
 }
+
+
+const genreMenu= new Menu();
+genreMenu.start();
